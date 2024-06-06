@@ -1,7 +1,6 @@
 using Events.APIs;
 using Events.APIs.Dtos;
 using Events.APIs.Errors;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Events.APIs;
@@ -21,7 +20,6 @@ public abstract class UsersControllerBase : ControllerBase
     /// Create one User
     /// </summary>
     [HttpPost()]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult<UserDto>> CreateUser(UserCreateInput input)
     {
         var user = await _service.CreateUser(input);
@@ -33,7 +31,6 @@ public abstract class UsersControllerBase : ControllerBase
     /// Delete one User
     /// </summary>
     [HttpDelete("{Id}")]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult> DeleteUser([FromRoute()] UserIdDto idDto)
     {
         try
@@ -52,7 +49,6 @@ public abstract class UsersControllerBase : ControllerBase
     /// Find many Users
     /// </summary>
     [HttpGet()]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult<List<UserDto>>> Users([FromQuery()] UserFindMany filter)
     {
         return Ok(await _service.Users(filter));
@@ -62,7 +58,6 @@ public abstract class UsersControllerBase : ControllerBase
     /// Get one User
     /// </summary>
     [HttpGet("{Id}")]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult<UserDto>> User([FromRoute()] UserIdDto idDto)
     {
         try
@@ -79,7 +74,6 @@ public abstract class UsersControllerBase : ControllerBase
     /// Update one User
     /// </summary>
     [HttpPatch("{Id}")]
-    [Authorize(Roles = "user")]
     public async Task<ActionResult> UpdateUser(
         [FromRoute()] UserIdDto idDto,
         [FromQuery()] UserUpdateInput userUpdateDto
